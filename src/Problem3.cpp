@@ -70,10 +70,38 @@ int isOperand(char *data){
 }
 int getOperand(char *data){
 	//converts data string to an integer "123" => 123
-	return 0;
+	int result = 0, index = 0;
+	if (data[0] == '-'&&data[1] != '\0')
+		index = 1;
+	for (int i = index; data[i] != '\0'; i++)
+	{
+		result += result * 10 + (data[i] - '0');
+	}
+	if (index == 1)
+		return -result;
+	return result;
 }
 //Helper Functions end
 int solve_tree(struct enode *root){
-    return -1;
+	if (root == NULL)
+		return -1;
+	if (root->left != NULL&&root->right != NULL)
+	{
+		int left = solve_tree(root->left);
+		int right = solve_tree(root->right);
+		char op = root->data[0];
+		if (op == '+')
+			return left + right;
+		else if (op == '-')
+			return left - right;
+		else if (op == '*')
+			return left*right;
+	}
+	else
+	{
+		return getOperand(root->data);
+	}
+	
+	
 }
 

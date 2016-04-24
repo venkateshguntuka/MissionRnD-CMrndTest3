@@ -71,6 +71,35 @@ struct node{
 	struct node *right;
 };
 
+void getInorder(struct node *root, int *arr, int *index)
+{
+	if (root == NULL)
+		return;
+	getInorder(root->left, arr, index);
+	arr[*index] = root->data;
+	*index += 1;
+	getInorder(root->right, arr, index);
+}
+
+
 int is_identical(struct node_dll *head, struct node *root){
-	return -1;
+	if (head == NULL || root == NULL)
+		return -1;
+	if (head == NULL || root == NULL)
+		return -1;
+	int *arr = (int *)malloc(50 * sizeof(int));
+	int length = 0, flag = 0;
+	getInorder(root, arr, &length);
+	for (int i = 0; i < length; i++)
+	{
+		if (arr[i] != head->data)
+		{
+			flag = 1;
+			break;
+		}
+		head = head->next;
+	}
+	if (flag == 1)
+		return 0;
+	return 1;
 }
